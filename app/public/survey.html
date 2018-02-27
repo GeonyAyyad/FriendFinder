@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Friend Finder</title>
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      
+
+      FriendFinder</h1>
+      
+      <h2 class="text-center">Group Up</h2>
+      <br>
+      <div class="text-center">
+        <a href="/api/friends"><button type="button" class="btn btn-lg btn-primary"><span class="glyphicon  glyphicon-list-alt"></span> View All Friends</button></a>
+        <a href="/"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-home"></span></button></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- Reservation Page -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">Questionnaire</h4>
+          </div>
+          <div class="panel-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name">
+              </div>
+              <div class="form-group">
+                <label for="photoUrl">Photo Url</label>
+                <input type="text" class="form-control" id="photoUrl">
+              </div>
+            <div class="input-field col s12">
+              <h3>Question 1</h3>
+              <h5>Are you a dog person?</h5>
+              <select id="question1">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">1 (Strongly Disagree)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Strongly Agree)</option>
+            </select>
+            </div>
+            <div class="input-field col s12">
+              <h3>Question 2</h3>
+              <h5>Are you a cat person?</h5>
+              <select id="question2">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">1 (Strongly Disagree)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Strongly Agree)</option>
+              </select>
+            </div>
+            <div class="input-field col s12">
+              <h3>Question 3</h3>
+              <h5>Do I look weird?</h5>
+              <select id="question3">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">1 (Strongly Disagree)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Strongly Agree)</option>
+              </select>
+            </div>
+
+
+<!--   Having a hard time with the model section - geony
+ -->
+  
+<script type="text/javascript">
+  $(document).ready(function () {
+      $("#submitButton").on("click", function (event) {
+        event.preventDefault()
+        console.log("in submitButton function")
+        function validateForm() {
+          var isValid = true;
+          $('.validate').each(function () {
+            if ($(this).val() === '') {
+            isValid = false;
+            }
+          });
+          $('.chosen-select').each(function () {
+            if ($(this).val() === "") {
+            isValid = false;
+            }
+          });
+          return isValid;
+        }
+        if (validateForm() == true) {
+    
+      var userInput = {
+        name: $("#name").val().trim(),
+        photoUrl: $("#photoUrl").val().trim(),
+        scores: [
+        $("#question1").val().trim(),
+        $("#question2").val().trim(),
+        $("#question3").val().trim(),
+        $("#question4").val().trim(),
+        $("#question5").val().trim(),
+        $("#question6").val().trim(),
+        $("#question7").val().trim(),
+        $("#question8").val().trim(),
+        $("#question9").val().trim(),
+        $("#question10").val().trim()
+        ]
+      };
+  
+var currentURL = window.location.origin;
+console.log(currentURL)
+console.log(userInput)
+  $.post(currentURL + "/api/friends", userInput, function(data) {
+            console.log("in post function"+ userInput)
+              console.log(data)
+            $("#matchName").text(data.name);
+            $("#matchImage").attr("src", data.photo);
+          }); 
+    $("#friendModal").modal('toggle'); 
+          // $('#name').val("");
+          // $('#photoUrl').val("");
+          // $('#question1').val("");
+          // $('#question2').val("");
+          // $('#question3').val("");
+          // $('#question4').val("");
+          // $('#question5').val("");
+          // $('#question6').val("");
+          // $('#question7').val("");
+          // $('#question8').val("");
+          // $('#question9').val("");
+          // $('#question10').val("");
+      }
+      
+      else{
+          
+          alert("Please fill out ALL fields before submitting survey!")
+          }
+      })
+      
+  })    
+      </script>
+  </body>
+</html>
